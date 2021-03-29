@@ -45,9 +45,37 @@ module.exports.getUser =  async function(req, res) {
     }
 }
 
-module.exports.updateUser =  async function(req, res) {
+module.exports.updateUser =  async function(req, res, next) {
     try {
-
+        const userUpdate = await User.findOne({
+            trxAddress: req.params.id
+        })
+        if(req.body.name){
+            userUpdate.name = req.body.name
+        }
+        if(req.body.nickName){
+            userUpdate.nickName = req.body.nickName
+        }
+        if(req.body.about) {
+            userUpdate.about = req.body.about
+        }
+        if(req.body.twitter){
+            userUpdate.twitter = req.body.twitter
+        }
+        if(req.body.telegram){
+            userUpdate.telegram = req.body.telegram
+        }
+        if(req.body.avatar){
+            userUpdate.avatar = req.body.avatar
+        }
+        if(req.body.background){
+            userUpdate.background = req.body.background
+        }
+        if(req.body.accountType){
+            userUpdate.accountType = req.body.accountType
+        }
+        await userUpdate.save()
+        res.status(200).send(userUpdate)
     } catch (error) {
         errorHandler(res, error)
     }
