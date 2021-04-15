@@ -1,6 +1,9 @@
 const express = require('express');
+// const device = require('express-device');
+// const useragent = require('express-useragent');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+// const passport = require('passport');
 const morgan = require('morgan');
 
 //Config file
@@ -27,13 +30,17 @@ server.use(require('cors')());
 //Init routes
 const collectionRoutes = require('./routes/collection');
 const nftitemRoutes = require('./routes/nftItem');
-const auth = require('./routes/auth');
-const lists = require('./routes/lists');
+const authRoutes = require('./routes/auth');
+const listsRoutes = require('./routes/lists');
+const requestRoutes = require('./routes/request');
+const auctionRoutes = require('./routes/auction');
 
 //Use routes
 server.use('/v1/collection', collectionRoutes);
 server.use('/v1/nftitem', nftitemRoutes);
-server.use('/v1/auth', auth);
-server.use('/v1/lists', lists);
+server.use('/v1/auth', authRoutes);
+server.use('/v1/lists', listsRoutes);
+server.use('/v1/request', requestRoutes);
+server.use('/v1/auction', auctionRoutes);
 
 module.exports = server;

@@ -4,31 +4,31 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
     name: {
         type: String,
-        default: 'NFTONE_USER'
+        default: 'PICIPO_USER'
     },
     nickName: {
         type: String,
-        default: 'NFTONE_NICKNAME'
+        default: 'PICIPO_NICKNAME'
     },
     about: {
         type: String,
-        default: 'NFTONE_ABOUT'
+        default: 'PICIPO_ABOUT'
     },
     twitter: {
         type: String,
-        default: 'd3vk0n'
+        default: null
     },
     telegram: {
         type: String,
-        default: 'd3vk0n'
+        default: null
     },
     avatar: {
         type: String,
-        default: 'http://avatars.mds.yandex.net/get-kino-vod-films-gallery/28788/47e2fd514411e18b76af786d7417062d/280x178_2'
+        default: null
     },
     background: {
         type: String,
-        default: 'https://previews.123rf.com/images/vell/vell2007/vell200700075/153170104-blue-texture-background.jpg'
+        default: null
     },
     ethAddress: {
         type: String,
@@ -38,6 +38,9 @@ const userSchema = new Schema({
     accountType: {
         type: String,
         default: 'user'
+    },
+    email: {
+        type: String
     }
 })
 

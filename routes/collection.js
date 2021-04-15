@@ -1,5 +1,5 @@
 const express = require('express');
-const controller = require('../controllers/collection');
+const controller = require('../controllers/collection')
 const router = express.Router();
 
 /**
@@ -8,5 +8,5 @@ const router = express.Router();
  */
 
 router.post('/newcollection', controller.addCollection);
-
+router.get('/all', controller.getCollections);
 module.exports = router;

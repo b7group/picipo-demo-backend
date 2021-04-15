@@ -9,5 +9,9 @@ const router = express.Router();
  */
 
 router.get('/users', controller.userList);
+router.get('/allItems', controller.allItems);
+router.get('/useritems/:id', controller.userItems);
+router.get('/', controller.allActions);
+router.get('/owner', controller.owner);
 
 module.exports = router;

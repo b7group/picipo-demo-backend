@@ -3,19 +3,24 @@ const Schema = mongoose.Schema
 
 const nftSchema = new Schema({
     id:{
-        type: Number
+        type: Number,
+        unique : true
     },
     author: {
         type: String,
-        default: 'NFTONE'
+        default: 'PICIPO'
+    },
+    owner: {
+        type: String,
+        default: 'PICIPO'
     },
     nftName: {
         type: String,
-        default: 'NFTONE_OBJECT'
+        default: 'PICIPO_OBJECT'
     },
     description: {
         type: String,
-        default: 'NFTONE_DESCRIPTION'
+        default: 'PICIPO_DESCRIPTION'
     },
     imgUri: {
         type: String,
@@ -29,6 +34,27 @@ const nftSchema = new Schema({
         type: String
     },
     btfsUri: {
+        type: String
+    },
+    params:{
+        weight: {
+            type: Number
+        },
+        height: {
+            Type: Number
+        }
+    },
+    date: {
+        type: Date
+    },
+    isAuction: {
+        type: Boolean,
+        default: false
+    },
+    isOwner: {
+        type: String
+    },
+    isAuthor: {
         type: String
     }
 })

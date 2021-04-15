@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const collectionSchema = new Schema({
     collectionName: {
         type: String,
-        default: 'NFTONE_COLLECTION'
+        default: 'PICIPO_COLLECTION'
     }
 })
 

@@ -1,5 +1,6 @@
 const User = require('../models/users');
-const errorHandler = require('../utils/errorHandler');
+const { post } = require('../routes/auth');
+const errorHandler = require('../utils/errorHandler')
 
 module.exports.users =  async function(req, res) {
     const userAddress = req.body.ethAddress
@@ -25,7 +26,8 @@ module.exports.users =  async function(req, res) {
                     avatar: req.body.avatar,
                     background: req.body.background,
                     ethAddress: req.body.ethAddress,
-                    accountType: req.body.accountType
+                    accountType: req.body.accountType,
+                    email: req.body.email
             }).save()
                 res.status(201).send(newUser)
             }
@@ -48,7 +50,7 @@ module.exports.getUser =  async function(req, res) {
 module.exports.updateUser =  async function(req, res, next) {
     try {
         const userUpdate = await User.findOne({
-            trxAddress: req.params.id
+            ethAddress: req.params.id
         })
         if(req.body.name){
             userUpdate.name = req.body.name
@@ -73,6 +75,9 @@ module.exports.updateUser =  async function(req, res, next) {
         }
         if(req.body.accountType){
             userUpdate.accountType = req.body.accountType
+        }
+        if(req.body.email){
+            userUpdate.email = req.body.email
         }
         await userUpdate.save()
         res.status(200).send(userUpdate)
