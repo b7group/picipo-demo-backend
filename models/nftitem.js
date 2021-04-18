@@ -24,7 +24,7 @@ const nftSchema = new Schema({
     },
     imgUri: {
         type: String,
-        default: 'https://api.dapps.icu/collection/1.json'
+        default: 'https://dapi.dapps.icu/'
     },
     price: {
         type: Number,

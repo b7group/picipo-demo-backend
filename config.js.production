@@ -3,5 +3,5 @@ module.exports = {
     mongoURI: `mongodb://admin:admin@127.0.0.1:27017/admin?connect=direct, nft`,
     auctionContract: '',
     baseAddress: ''
-    // TG_BOT_ID: '1600242411:AAHAUdnluFO2Ickxm0kD8wMYrggGUGmC6eM'
+    // TG_BOT_ID: ''
 }

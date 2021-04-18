@@ -6,7 +6,7 @@ const Auction = require('../models/auction')
 
 module.exports.userList = async function (req, res) {
   try {
-    const users = await User.find({}).reverse().limit(8)
+    const users = await User.find({}).limit(8)
     res.status(200).send(users)
   } catch (error) {
     errorHandler(res, error)

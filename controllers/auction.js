@@ -1,7 +1,7 @@
 const Auction = require('../models/auction')
 const axios = require('axios')
-const TronWeb = require('tronweb')
 const errorHandler = require('../utils/errorHandler')
+
 module.exports.finalize = async function (req, res, next) {
   let nftItemId = req.params.id
   try {
@@ -40,7 +40,7 @@ module.exports.add = async function (req, res) {
       nftName: req.body.nftName,
       description: req.body.description,
       imageUri: req.body.imageUri,
-      collectionName: toLowerCase(req.body.collectionName),
+      collectionName: req.body.collectionName.toLowerCase(),
       date: date,
     }).save()
     res.status(200).json({
@@ -57,22 +57,25 @@ module.exports.sell = async function (req, res) {
     const auctionUpdate = await Auction.findOne({
       id: req.params.id,
     })
-    if (req.body.isAuction) {
+    console.log(auctionUpdate)
+    console.log(req.body)
+    if (req.body.isAuction !== void 0) {
       auctionUpdate.isAuction = req.body.isAuction
+      console.log(req.body.isAuction)
     }
-    if (req.body.minPrice) {
+    if (req.body.minPrice !== void 0) {
       auctionUpdate.minPrice = req.body.minPrice
     }
-    if (req.body.buyNowPrice) {
+    if (req.body.buyNowPrice !== void 0) {
       auctionUpdate.buyNowPrice = req.body.buyNowPrice
     }
-    if (req.body.startDate) {
+    if (req.body.startDate !== void 0) {
       auctionUpdate.startDate = req.body.startDate
     }
-    if (req.body.endDate) {
+    if (req.body.endDate !== void 0) {
       auctionUpdate.endDate = req.body.endDate
     }
-    if (req.body.owner){
+    if (req.body.owner !== void 0){
       auctionUpdate.owner = req.body.owner
     }
     await auctionUpdate.save()
