@@ -1,0 +1,57 @@
+Arguments: 
+  /Users/d3vk0n/.nvm/versions/node/v15.12.0/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js
+
+PATH: 
+  /Users/d3vk0n/.nvm/versions/node/v15.12.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/d3vk0n/.nvm/versions/node/v15.12.0/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  15.12.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/d3vk0n/Projects/Develop/picipo/picipo-demo-backend/package.json: Unexpected token } in JSON at position 633
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "picipo-demo-nft-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "nodemon index.js"
+    },
+    "author": "Sergey Kononov",
+    "license": "MIT",
+    "dependencies": {
+      "axios": "^0.21.1",
+      "body-parser": "^1.19.0",
+      "cors": "^2.8.5",
+      "express": "^4.17.1",
+      "express-device": "^0.4.2",
+      "express-useragent": "^1.0.15",
+      "moment": "^2.29.1",
+      "mongoose": "^5.12.2",
+      "morgan": "^1.10.0",
+      "multer": "^1.4.2",
+      "nodemon": "^2.0.7",
+      "passport": "^0.4.1",
+      "telegraf": "^4.3.0",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
