@@ -3,6 +3,8 @@ module.exports = {
     mongoURI: ``,
     auctionContract: '',
     baseAddress: '',
-    jwt: ''
+    jwt: '',
+    hashPassword: '',
+    LOGIN_DEBUG: true
     // TG_BOT_ID: ''
 }

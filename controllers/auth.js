@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const web3 = require('web3');
 const config = require('../config/config')
 const User = require('../models/users');
 const errorHandler = require('../utils/errorHandler')
@@ -63,11 +64,11 @@ module.exports.changeAccountType =  async function(req, res) {
 }
 
 module.exports.login = async function (req, res) {
-  if(secret.LOGIN_DEBUG){
+  if(config.LOGIN_DEBUG){
     console.log('AUTH', req.headers)
   }
   const candidate = await User.findOne({ ethAddress: req.body.ethAddress })
-  const ethPassword = web3.utils.toHex(secret.hashPassword)
+  const ethPassword = web3.utils.toHex(config.hashPassword)
   if (candidate) {
     const passwordResult = bcrypt.compareSync(
       req.headers.host + ethPassword,
@@ -99,7 +100,7 @@ module.exports.login = async function (req, res) {
 
 module.exports.register = async function (req, res) {
   const candiadte = await User.findOne({ ethAddress: req.body.ethAddress })
-  const ethPassword = web3.utils.toHex(secret.hashPassword)
+  const ethPassword = web3.utils.toHex(config.hashPassword)
   if (candiadte) {
     res.status(409).json({
       message: 'USER ALREDY REGISTRED, TRY REGISTER WITH ANOTHER ETHADDRESS',
@@ -115,7 +116,7 @@ module.exports.register = async function (req, res) {
       telegram: req.body.telegram,
       avatar: req.body.avatar,
       background: req.body.background,
-      ethAddress: req.body.trxAddress,
+      ethAddress: req.body.ethAddress,
       accountType: req.body.accountType,
       email: req.body.email,
       password: bcrypt.hashSync(password, salt),
