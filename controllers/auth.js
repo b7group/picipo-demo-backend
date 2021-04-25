@@ -1,41 +1,9 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config')
 const User = require('../models/users');
-const { post } = require('../routes/auth');
 const errorHandler = require('../utils/errorHandler')
 
-module.exports.users =  async function(req, res) {
-    const userAddress = req.body.ethAddress
-    const checkAddress = await User.findOne({
-            ethAddress: userAddress
-        });
-    try {
-        User.findOne({
-            ethAddress: req.body.ethAddress
-        }, async (err, obj) => {
-            if(obj){
-                res.send(obj)
-            }
-            if(err){
-                res.send(err)
-            } else {
-                const newUser = await new User({
-                    name: req.body.name,
-                    nickName: req.body.nickName,
-                    about: req.body.about,
-                    twitter: req.body.twitter,
-                    telegram: req.body.telegram,
-                    avatar: req.body.avatar,
-                    background: req.body.background,
-                    ethAddress: req.body.ethAddress,
-                    accountType: req.body.accountType,
-                    email: req.body.email
-            }).save()
-                res.status(201).send(newUser)
-            }
-        })
-    } catch (error) {
-        errorHandler(res, error)
-    }
-}
 module.exports.getUser =  async function(req, res) {
     try {
             const user = await User.findOne({
@@ -94,3 +62,96 @@ module.exports.changeAccountType =  async function(req, res) {
     }
 }
 
+module.exports.login = async function (req, res) {
+  if(secret.LOGIN_DEBUG){
+    console.log('AUTH', req.headers)
+  }
+  const candidate = await User.findOne({ ethAddress: req.body.ethAddress })
+  const ethPassword = web3.utils.toHex(secret.hashPassword)
+  if (candidate) {
+    const passwordResult = bcrypt.compareSync(
+      req.headers.host + ethPassword,
+      candidate.password,
+    )
+    if (passwordResult) {
+      const token = jwt.sign(
+        {
+          ethAddress: candidate.ethAddress,
+          userID: candidate._id,
+        },
+        config.jwt,
+        { expiresIn: 60 * 60 },
+      )
+      res.status(200).json({
+        token: `Bearer ${token}`,
+      })
+    } else {
+      res.status(401).json({
+        message: 'Wrong password! Try Again!',
+      })
+    }
+  } else {
+    res.status(404).json({
+      message: 'User with this status not registred!',
+    })
+  }
+}
+
+module.exports.register = async function (req, res) {
+  const candiadte = await User.findOne({ ethAddress: req.body.ethAddress })
+  const ethPassword = web3.utils.toHex(secret.hashPassword)
+  if (candiadte) {
+    res.status(409).json({
+      message: 'USER ALREDY REGISTRED, TRY REGISTER WITH ANOTHER ETHADDRESS',
+    })
+  } else {
+    const salt = bcrypt.genSaltSync(10)
+    const password = req.headers.host + ethPassword
+    const user = new User({
+      name: req.body.name,
+      nickName: req.body.nickName,
+      about: req.body.about,
+      twitter: req.body.twitter,
+      telegram: req.body.telegram,
+      avatar: req.body.avatar,
+      background: req.body.background,
+      ethAddress: req.body.trxAddress,
+      accountType: req.body.accountType,
+      email: req.body.email,
+      password: bcrypt.hashSync(password, salt),
+    })
+    try {
+      await user.save()
+      res.status(201).json(user)
+    } catch (e) {
+      errorHandler(res, e)
+    }
+  }
+}
+
+module.exports.checkUser = async function (req, res) {
+  const user = false
+  try {
+    const user = await User.findOne(
+      {
+        ethAddress: req.params.id,
+      },
+      (err, user) => {
+        if (err) {
+          res.status(404).json(false)
+          return
+        }
+        if (user) {
+          res.status(200).json(true)
+          return
+        }
+        if (!user) {
+          res.status(200).json(false)
+          return
+        }
+      },
+    )
+  } catch (error) {
+    errorHandler(res, error)
+  }
+}

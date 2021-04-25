@@ -9,8 +9,11 @@ const router = express.Router();
  * http://localhost:1001/v1/auth/:id
  */
 
-router.post('/', controller.users),
+// router.post('/', controller.users),
 router.get('/:id', controller.getUser),
 router.patch('/:id', controller.updateUser)
+router.post('/register', controller.register)
+router.post('/login', controller.login)
+router.get('/checkuser/:id', controller.checkUser)
 
 module.exports = router;

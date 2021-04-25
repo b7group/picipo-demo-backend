@@ -3,7 +3,7 @@ const express = require('express');
 // const useragent = require('express-useragent');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const passport = require('passport');
+const passport = require('passport');
 const morgan = require('morgan');
 
 //Config file
@@ -20,6 +20,9 @@ mongoose.connect(config.mongoURI, {
     .then(() => console.log(`Server connected to mongoDB with params: ${config.mongoURI}`))
     .catch(err => console.log('Problem with mongoDB', err))
 
+
+server.use(passport.initialize())
+require('./middleware/passport')(passport)
 //Init addons
 server.use(morgan('dev'));
 server.use(bodyParser.urlencoded({ extended: true }));
