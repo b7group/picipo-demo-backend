@@ -133,7 +133,7 @@ module.exports.register = async function (req, res) {
 module.exports.checkUser = async function (req, res) {
   const user = false
   try {
-    const user = await User.findOne(
+    user = await User.findOne(
       {
         ethAddress: req.params.id,
       },
