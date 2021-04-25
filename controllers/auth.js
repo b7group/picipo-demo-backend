@@ -135,7 +135,7 @@ module.exports.checkUser = async function (req, res) {
   try {
     user = await User.findOne(
       {
-        ethAddress: req.params.id,
+        ethAddress: req.body.ethAddress,
       },
       (err, user) => {
         if (err) {
