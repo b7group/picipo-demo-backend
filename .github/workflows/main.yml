@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Deploy
+          if: ${{ success() }}
+          uses: garygrossgarten/github-action-ssh@release
+          with:
+            command: cd picipo-demo-backend/ && . deploy.sh
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.SSH_USERNAME }}
+            port: 22
+            privateKey: ${{ secrets.SECRET_KEY}}
