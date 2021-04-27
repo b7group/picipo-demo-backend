@@ -12,7 +12,7 @@ RUN apk add gettext
 RUN envsubst < config.js.${NFTPROFILE} \
     && envsubst < config.js.${NFTPROFILE} >./config/config.js \
     && cat ./config/config.js \
-    && npm install
+    && npm install --global
 
 EXPOSE 10001
 CMD ["node", "index.js"]
